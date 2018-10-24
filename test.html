@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .wrapper{
+
+    }
+    .dropzone{
+        width:500px;
+        height: 500px;
+        background:lavender;
+    }
+
+    .result img{
+        width:100px;
+        height: 100px;
+    }
+</style>
+
+
+
+<div class="wrapper">
+
+    <img src="aaa.jpg" style="width:100px; height:100px"> <!--화면내에서 드래그 드롭하려면 제이쿼리 필요-->
+
+    <div class="dropzone"></div>
+    <div class="result">
+        <canvas id="myCanvas" width="578" height="200"></canvas>
+    </div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+
+<script>
+    $(document).ready(function () {
+
+        /*
+        function loadCanvas(dataURL) {
+            var canvas = document.getElementById('myCanvas');
+            var context = canvas.getContext('2d');
+
+            // load image from data url
+            var imageObj = new Image();
+            imageObj.onload = function() {
+                context.drawImage(this, 0, 0);
+            };
+
+            imageObj.src = dataURL;
+        } //유알엘 전달해주면 화면(캔버스)에 뿌리는 것.
+
+*/
+
+       $(".dropzone").on("dragenter dragover", function (event) {
+           event.preventDefault(); //기본 동작 막기
+       });
+
+        $(".dropzone").on("drop", function (event) {
+           // console.log("dropped.....");
+            event.preventDefault(); //기본 동작 막기
+
+            var files = event.originalEvent.dataTransfer.files; // 동시에 여러개 드롭해도 막아짐
+
+         //   console.log(files); //배열로 나옴
+
+            for(var i=0; i <files.length; i++){
+                var reader = new FileReader();
+
+                reader.readAsDataURL(files[i]); //파일데이터를 읽어서 유알엘로 만들어줌.
+
+                reader.onload = function (e) {
+                  //  console.log(e.target.result); //유알엘 출력
+
+                   // loadCanvas(e.target.result);
+
+                    var dataURL = e.target.result;
+
+                    var img = document.createElement("img");
+
+                    img.setAttribute("src",dataURL);
+
+
+                    $(".result").append(img);
+                }
+            }
+
+
+
+
+
+        }); //박스에 사진 드롭시 사진이 옮겨지지 않음
+
+    });
+</script>
+
+
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+<style>
+    .wrapper{
+
+    }
+    .dropzone{
+        width:500px;
+        height: 500px;
+        background:lavender;
+    }
+
+    .result img{
+        width:100px;
+        height: 100px;
+    }
+
+    .dropzone img{
+        width:100px;
+        height: 100px;
+    }
+
+    .result{
+        width: 100%;
+        height: 300px;
+        background-color: lightpink;
+    }
+</style>
+
+
+
+<div class="wrapper">
+
+
+
+    <div class="dropzone">
+
+        <img class="item" data-pid="P1" src="face1.jpg">
+        <img class="item" data-pid="P2" src="face2.jpg">
+        <img class="item" data-pid="P3" src="face3.jpg">
+    </div>
+    <div class="result">
+
+    </div>
+</div>
+
+<script
+        src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+        crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script> <!--제이쿼리유아이-->
+
+<script>
+    $(document).ready(function () {
+        $(".item").draggable({revert:"invalid"}); //이동이 가능해짐. 리벌트하면 원래 자리로 들어감
+        $(".result").droppable({
+
+            drop:function (event,ui) {
+               // alert('aaaa'); //드롭이 일어나면 얼랏창
+
+                var pid= $(ui.draggable[0]).attr("data-pid");
+
+                ui.draggable.draggable('option','revert',true);
+
+                console.log(pid); //p1 p2 같이 나오게 됨.
+
+                $('.item').data('hover',1);
+
+            }
+        })
+
+    });
+</script>
+
+
+
+</body>
+</html>
